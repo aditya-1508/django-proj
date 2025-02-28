@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg mt-8">
+  <h2 class="text-2xl font-bold text-center mb-4">Upload Profile Picture</h2>
+
+  <form method="POST" enctype="multipart/form-data" class="space-y-4">
+    {% csrf_token %}
+
+    <!-- File Upload -->
+    <div>
+      <label for="id_profile_picture" class="block font-semibold mb-2"
+        >Choose Image</label
+      >
+      <input
+        type="file"
+        name="profile_picture"
+        id="id_profile_picture"
+        class="w-full border p-2 rounded-lg file:bg-blue-500 file:text-white file:rounded-md file:px-4 file:py-2 file:border-0 hover:file:bg-blue-600 cursor-pointer"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+    >
+      Upload
+    </button>
+  </form>
+
+  <!-- Back to Profile -->
+  <a
+    href="{% url 'profile' user.id %}"
+    class="block text-center text-gray-500 mt-4 hover:text-gray-700 transition"
+  >
+    Back to Profile
+  </a>
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelloGram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-gray-900 text-white p-4 shadow-lg">
+      <div class="container mx-auto flex items-center justify-between">
+        <!-- Logo -->
+        <a href="{% url 'feed' %}" class="text-2xl font-bold">HelloGram</a>
+
+        <!-- Search Form (Hidden on Small Screens) -->
+        <div class="hidden md:flex">
+          <form action="{% url 'search_users' %}" method="GET" class="flex">
+            <input
+              type="text"
+              name="q"
+              placeholder="Search users..."
+              class="border p-2 rounded-l-md text-black outline-none"
+            />
+            <button
+              type="submit"
+              class="bg-blue-500 px-4 rounded-r-md hover:bg-blue-600"
+            >
+              🔍
+            </button>
+          </form>
+        </div>
+
+        <!-- User Actions & Profile (Hidden in Mobile) -->
+        <div class="hidden md:flex items-center gap-4">
+          {% if user.is_authenticated %}
+          <a href="{% url 'profile' user.id %}" class="text-white">Profile</a>
+          <a
+            href="{% url 'add_post' %}"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            + Create Post
+          </a>
+          <a href="{% url 'logout' %}" class="text-red-400">Logout</a>
+          <a href="{% url 'profile' user.id %}">
+            <img
+              src="{{ user.profile_picture.url }}"
+              class="w-10 h-10 rounded-full border"
+              alt="Profile Pic"
+            />
+          </a>
+          {% else %}
+          <a href="{% url 'login' %}" class="text-white">Login</a>
+          <a href="{% url 'signup' %}" class="text-blue-400">Sign Up</a>
+          {% endif %}
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button
+          id="menu-toggle"
+          class="md:hidden text-white text-2xl focus:outline-none"
+        >
+          ☰
+        </button>
+      </div>
+
+      <!-- Mobile Menu (Initially Hidden) -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden flex flex-col items-center gap-4 bg-gray-800 py-4"
+      >
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' user.id %}" class="text-white">Profile</a>
+        <a
+          href="{% url 'add_post' %}"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          + Create Post
+        </a>
+        <a href="{% url 'logout' %}" class="text-red-400">Logout</a>
+        <a href="{% url 'profile' user.id %}">
+          <img
+            src="{{ user.profile_picture.url }}"
+            class="w-10 h-10 rounded-full border"
+            alt="Profile Pic"
+          />
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}" class="text-white">Login</a>
+        <a href="{% url 'signup' %}" class="text-blue-400">Sign Up</a>
+        {% endif %}
+
+        <!-- Mobile Search Bar -->
+        <form action="{% url 'search_users' %}" method="GET" class="flex w-4/5">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search users..."
+            class="border p-2 rounded-l-md text-black outline-none w-full"
+          />
+          <button
+            type="submit"
+            class="bg-blue-500 px-4 rounded-r-md hover:bg-blue-600"
+          >
+            🔍
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">{% block content %}{% endblock %}</div>
+
+    <!-- JavaScript for Mobile Menu Toggle -->
+    <script>
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          var menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+    </script>
+  </body>
+</html>

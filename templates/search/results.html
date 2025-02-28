@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold text-center">
+    Search Results for "{{ query }}"
+  </h2>
+
+  <!-- ✅ Connected Users Section -->
+  <h3 class="mt-4 text-lg font-bold">Connected Users</h3>
+  <ul class="mt-2 space-y-2">
+    {% for user in connected_results %}
+    <li class="flex items-center justify-between border-b pb-2">
+      <div class="flex items-center space-x-3">
+        <img
+          src="{{ user.profile_picture.url }}"
+          alt="Profile Pic"
+          class="w-10 h-10 rounded-full border"
+          onerror="this.src='https://via.placeholder.com/100'"
+        />
+        <a
+          href="{% url 'profile' user.id %}"
+          class="text-blue-500 font-semibold"
+        >
+          {{ user.phone }} ({{ user.email }})
+        </a>
+      </div>
+      <span class="text-green-500 font-semibold">Connected</span>
+    </li>
+    {% empty %}
+    <p class="text-gray-500">No connected users found.</p>
+    {% endfor %}
+  </ul>
+
+  <!-- ✅ Users Not Connected Section -->
+  <h3 class="mt-6 text-lg font-bold">People You May Know</h3>
+  <ul class="mt-2 space-y-2">
+    {% for user in not_connected_results %}
+    <li class="flex items-center justify-between border-b pb-2">
+      <div class="flex items-center space-x-3">
+        <img
+          src="{{ user.profile_picture.url }}"
+          alt="Profile Pic"
+          class="w-10 h-10 rounded-full border"
+          onerror="this.src='https://via.placeholder.com/100'"
+        />
+        <a
+          href="{% url 'profile' user.id %}"
+          class="text-blue-500 font-semibold"
+        >
+          {{ user.phone }} ({{ user.email }})
+        </a>
+      </div>
+      <a
+        href="{% url 'add_connection' user.id %}"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+      >
+        + Connect
+      </a>
+    </li>
+    {% empty %}
+    <p class="text-gray-500">No new users available to connect.</p>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accounts Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-96 text-center">
+      <h1 class="text-2xl font-bold text-gray-800">Welcome to Accounts</h1>
+      <p class="text-gray-600 mt-2">
+        Manage your account settings and authentication.
+      </p>
+
+      <div class="mt-4">
+        <a
+          href="{% url 'login' %}"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Login
+        </a>
+        <a
+          href="{% url 'logout' %}"
+          class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 ml-2"
+        >
+          Logout
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

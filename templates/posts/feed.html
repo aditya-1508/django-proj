@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block content %}
+<div class="max-w-md mx-auto">
+  <h2 class="text-lg font-bold mb-4 text-center">Your Feed</h2>
+
+  {% if posts %}
+  <div class="space-y-5">
+    {% for post in posts %}
+    <div class="bg-white rounded-lg shadow-md p-3 border">
+      <!-- User Info -->
+      <div class="flex items-center space-x-3 mb-2">
+        <img
+          src="{{ post.user.profile_image.url }}"
+          alt="Profile Image"
+          class="w-8 h-8 rounded-full border"
+        />
+        <p class="text-sm font-semibold">{{ post.user.username }}</p>
+      </div>
+
+      <!-- Post Image -->
+      {% if post.image %}
+      <div class="rounded-lg overflow-hidden border">
+        <img
+          src="{{ post.image.url }}"
+          alt="Post Image"
+          class="w-full h-64 object-cover"
+        />
+      </div>
+      {% endif %}
+
+      <!-- Post Text -->
+      <p class="text-sm text-gray-700 mt-2">{{ post.text }}</p>
+
+      <!-- Post Timestamp -->
+      <p class="text-xs text-gray-400 mt-1">
+        {{ post.created_at|date:"M d, Y" }}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-gray-500 text-center mt-6">
+    No posts available from connected users.
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

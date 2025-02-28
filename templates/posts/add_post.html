@@ -1,0 +1,56 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg mt-8">
+    <h2 class="text-2xl font-bold text-center mb-4">Create a New Post</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- Post Text -->
+        <div>
+            <label for="id_text" class="block font-semibold mb-1">Caption</label>
+            <textarea 
+                name="text" 
+                id="id_text" 
+                rows="3" 
+                class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300" 
+                placeholder="What's on your mind?"
+            >{{ form.text.value|default:'' }}</textarea>
+        </div>
+
+        <!-- Image Upload -->
+        <div>
+            <label for="id_image" class="block font-semibold mb-1">Upload Image</label>
+            <input 
+                type="file" 
+                name="image" 
+                id="id_image" 
+                class="w-full border p-2 rounded-lg file:bg-blue-500 file:text-white file:rounded-md file:px-4 file:py-2 file:border-0 hover:file:bg-blue-600 cursor-pointer"
+            />
+        </div>
+
+        <!-- Visibility Options -->
+        <div>
+            <label for="id_visibility" class="block font-semibold mb-1">Visibility</label>
+            <select 
+                name="visibility" 
+                id="id_visibility" 
+                class="w-full p-2 border rounded-lg focus:ring focus:ring-blue-300"
+            >
+                <option value="public" {% if form.visibility.value == "public" %}selected{% endif %}>🌎 Public</option>
+                <option value="connections" {% if form.visibility.value == "connections" %}selected{% endif %}>👥 Connections Only</option>
+                <option value="private" {% if form.visibility.value == "private" %}selected{% endif %}>🔒 Private</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+            type="submit" 
+            class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+            Post
+        </button>
+    </form>
+</div>
+{% endblock %}
